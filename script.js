@@ -106,7 +106,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Загрузка данных о слотах из GitHub Gist
   async function fetchSlotsFromGist() {
     try {
-      const gistId = "a652954d69d88188e0bc80c0fd57125c" // ID вашего Gist
+      const gistId = "1c39c85fe0366fd7e147e3efbe6a492b" // ID вашего Gist
       const fileName = "your_slots.csv"
 
       // Запрос к GitHub API для получения содержимого Gist
