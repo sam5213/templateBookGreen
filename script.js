@@ -259,10 +259,17 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function sendDataToTelegram() {
+    const user = Telegram.WebApp?.initDataUnsafe?.user;
+  
+    if (!user) {
+      console.error("Пользователь не авторизован через Telegram WebApp");
+      return;
+    }
+  
     const data = {
       user: {
-        id: Telegram.WebApp.initDataUnsafe.user.id, // ID пользователя Telegram
-        username: Telegram.WebApp.initDataUnsafe.user.username || "Не указан",
+        id: user.id, // ID пользователя Telegram
+        username: user.username || "Не указан",
       },
       answers: answers.map((answer) => ({
         question: answer.questionId,
