@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <title>Консультация | Главная</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant:wght@300;400;500;600&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="welcome-page" id="welcome-page">
+            <div class="image-container">
+                <div class="portrait-frame">
+                    <img src="images/profile.png" alt="Консультант">
+                </div>
+            </div>
+            <div class="quote">
+                "Ваш путь к внутренней свободе и балансу начинается здесь.<br>
+                Сделайте первый шаг — я готова помочь."
+            </div>
+            <div class="description">
+                Пройдите небольшой опрос и получите возможность записаться на консультацию или МАК расклад.
+            </div>
+            <button class="start-button" id="start-survey">Начать</button>
+        </div>
+
+        <div class="survey-page hidden" id="survey-page">
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress" id="progress"></div>
+                </div>
+            </div>
+            
+            <div class="question-container" id="question-container">
+                <!-- Questions will be inserted here by JavaScript -->
+            </div>
+        </div>
+
+        <div class="calendar-page hidden" id="calendar-page">
+            <h2>Выберите удобное время для консультации</h2>
+            <div class="calendar-container">
+                <div class="calendar-header">
+                    <button id="prev-month">&lt;</button>
+                    <h3 id="month-year"></h3>
+                    <button id="next-month">&gt;</button>
+                </div>
+                <div class="weekdays">
+                    <div>Пн</div>
+                    <div>Вт</div>
+                    <div>Ср</div>
+                    <div>Чт</div>
+                    <div>Пт</div>
+                    <div>Сб</div>
+                    <div>Вс</div>
+                </div>
+                <div class="days" id="calendar-days"></div>
+            </div>
+            
+            <div class="time-slots hidden" id="time-slots">
+                <h3>Доступное время <span id="selected-date"></span></h3>
+                <div class="slots-container" id="slots-container">
+                    <!-- Time slots will be inserted here by JavaScript -->
+                </div>
+                <button class="book-button disabled" id="book-button">Записаться</button>
+            </div>
+        </div>
+
+        <div class="success-page hidden" id="success-page">
+            <div class="success-icon">✓</div>
+            <h2>Вы успешно записались!</h2>
+            <p>Ваша консультация запланирована на <span id="booked-date"></span> в <span id="booked-time"></span></p>
+            <p>Мы свяжемся с вами для подтверждения.</p>
+            <button class="start-button" id="back-to-home">На главную</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
