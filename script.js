@@ -260,17 +260,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function sendDataToTelegram() {
     const data = {
+      user: {
+        id: Telegram.WebApp.initDataUnsafe.user.id, // ID пользователя Telegram
+        username: Telegram.WebApp.initDataUnsafe.user.username || "Не указан",
+      },
       answers: answers.map((answer) => ({
-        questionId: answer.questionId,
+        question: answer.questionId,
         answer: answer.answer,
       })),
       date: selectedDate ? formatDate(selectedDate) : null,
       time: selectedTimeSlot,
-    }
-
+    };
+  
     // Преобразуем данные в строку JSON
-    const jsonData = JSON.stringify(data)
-    Telegram.WebApp.sendData(jsonData)
+    const jsonData = JSON.stringify(data);
+  
+    // Отправляем данные через Telegram WebApp
+    Telegram.WebApp.sendData(jsonData);
   }
 
   // Форматирование даты
