@@ -20,73 +20,74 @@ document.addEventListener("DOMContentLoaded", () => {
   const backToHomeBtn = document.getElementById("back-to-home")
 
   // Вопросы опроса
-  const questions = [
-    {
-      id: 1,
-      question: "Какой запрос для консультирования для вас наиболее актуален?",
-      options: [
-        "Тревожность",
-        "Сложности в отношениях",
-        "Самооценка и неуверенность",
-        "Семейные/детско-родительские конфликты",
-        "Преодоление кризисных состояний",
-      ],
-    },
-    {
-      id: 2,
-      question: "Какой метод работы вызывает у вас наибольший интерес?",
-      options: [
-        "Гештальт-терапия",
-        "Метафорические ассоциативные карты (МАК)",
-        "Психоанализ",
-        "НЛП или ЭОТ",
-        "Психологические игры",
-      ],
-    },
-    {
-      id: 3,
-      question: "Какой формат консультации вы бы предпочли?",
-      options: [
-        "Онлайн (видео/аудио)",
-        "Консультация по переписке",
-        "МАК-расклад",
-        "Участие в трансформационных играх",
-      ],
-    },
-    {
-      id: 4,
-      question: "Как часто вы готовы заниматься?",
-      options: [
-        "Единичная консультация",
-        "Раз в неделю",
-        "Раз в две недели",
-        "По необходимости",
-        "Участвовать в онлайн-марафоне или трансформационной игре",
-      ],
-    },
-    {
-      id: 5,
-      question: "Есть ли у вас опыт работы с психологом?",
-      options: [
-        "Да, я уже работал(а) с психологом",
-        "Нет, это мой первый опыт",
-        "Я пробовал(а), но не довел(а) до конца",
-      ],
-    },
-    {
-      id: 6,
-      question: "Какой тип услуги вас интересует?",
-      options: [
-        "Онлайн консультация - 3000 рублей",
-        "Консультация по переписке - 2000 рублей",
-        "МАК расклад (метафорические ассоциативные карты ) - 2000 рублей",
-      ],
-    },
-  ]
+  // const questions = [
+  //   {
+  //     id: 1,
+  //     question: "Какой запрос для консультирования для вас наиболее актуален?",
+  //     options: [
+  //       "Тревожность",
+  //       "Сложности в отношениях",
+  //       "Самооценка и неуверенность",
+  //       "Семейные/детско-родительские конфликты",
+  //       "Преодоление кризисных состояний",
+  //     ],
+  //   },
+  //   {
+  //     id: 2,
+  //     question: "Какой метод работы вызывает у вас наибольший интерес?",
+  //     options: [
+  //       "Гештальт-терапия",
+  //       "Метафорические ассоциативные карты (МАК)",
+  //       "Психоанализ",
+  //       "НЛП или ЭОТ",
+  //       "Психологические игры",
+  //     ],
+  //   },
+  //   {
+  //     id: 3,
+  //     question: "Какой формат консультации вы бы предпочли?",
+  //     options: [
+  //       "Онлайн (видео/аудио)",
+  //       "Консультация по переписке",
+  //       "МАК-расклад",
+  //       "Участие в трансформационных играх",
+  //     ],
+  //   },
+  //   {
+  //     id: 4,
+  //     question: "Как часто вы готовы заниматься?",
+  //     options: [
+  //       "Единичная консультация",
+  //       "Раз в неделю",
+  //       "Раз в две недели",
+  //       "По необходимости",
+  //       "Участвовать в онлайн-марафоне или трансформационной игре",
+  //     ],
+  //   },
+  //   {
+  //     id: 5,
+  //     question: "Есть ли у вас опыт работы с психологом?",
+  //     options: [
+  //       "Да, я уже работал(а) с психологом",
+  //       "Нет, это мой первый опыт",
+  //       "Я пробовал(а), но не довел(а) до конца",
+  //     ],
+  //   },
+  //   {
+  //     id: 6,
+  //     question: "Какой тип услуги вас интересует?",
+  //     options: [
+  //       "Онлайн консультация - 3000 рублей",
+  //       "Консультация по переписке - 2000 рублей",
+  //       "МАК расклад (метафорические ассоциативные карты ) - 2000 рублей",
+  //     ],
+  //   },
+  // ]
 
   // Состояние приложения
   let currentQuestionIndex = 0
   let answers = []
+  let questions = []
   const currentDate = new Date()
   let selectedDate = null
   let selectedTimeSlot = null
@@ -100,6 +101,43 @@ document.addEventListener("DOMContentLoaded", () => {
       return Buffer.from(str, "base64").toString("base64") === str
     } catch (error) {
       return false
+    }
+  }
+
+  // Загрузка данных о вопросах из GitHub Gist
+  async function fetchQuestionsFromGist() {
+    try {
+      const gistId = "f494930e7bee454c07ddfe1753c4f75e"; // ID вашего Gist
+      const fileName = "questions.csv";
+      // Запрос к GitHub API для получения содержимого Gist
+      const response = await fetch(`https://api.github.com/gists/${gistId}`);
+      const data = await response.json();
+      // Извлекаем содержимое файла
+      const fileContent = data.files[fileName].content;
+      // Проверяем, является ли содержимое Base64
+      let decodedContent;
+      if (isBase64(fileContent)) {
+        decodedContent = Buffer.from(fileContent, "base64").toString("utf-8");
+      } else {
+        decodedContent = fileContent; // Используем содержимое как есть
+      }
+      // Парсим CSV-данные
+      const rows = decodedContent.split("\n");
+      const headers = rows[0].split(",");
+      const parsedQuestions = [];
+      for (let i = 1; i < rows.length; i++) {
+        const values = rows[i].split(",");
+        if (!values[0]) continue; // Пропускаем пустые строки
+        parsedQuestions.push({
+          id: Number(values[0]),
+          question: values[1],
+          options: values.slice(2).filter((option) => option.trim() !== ""),
+        });
+      }
+      return parsedQuestions;
+    } catch (error) {
+      console.error("Ошибка загрузки вопросов:", error);
+      return [];
     }
   }
 
@@ -377,4 +415,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Первоначальная загрузка
   fetchSlotsFromGist().then(renderCalendar)
+  fetchQuestionsFromGist().then((loadedQuestions) => {
+    questions = loadedQuestions;
+    console.log("Вопросы успешно загружены:", questions);
+  });
 })
