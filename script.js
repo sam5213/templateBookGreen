@@ -290,10 +290,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const result = await response.json();
       console.log("Ответ от сервера:", result);
-      alert("Заявка успешно отправлена!");
     } catch (error) {
       console.error("Ошибка отправки данных:", error);
-      alert("Произошла ошибка при отправке данных.");
     }
   }
 
