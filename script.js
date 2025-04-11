@@ -230,7 +230,7 @@ document.addEventListener("DOMContentLoaded", () => {
       alert("Ошибка бронирования: " + error.message)
     }
     successPage.classList.remove("hidden")
-    calendarPage.classList.remove("hidden")
+    calendarPage.classList.add("hidden")
   }
 
   // Отправка данных на сервер через POST-запрос
