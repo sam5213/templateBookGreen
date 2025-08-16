@@ -17,7 +17,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const bookButton = document.getElementById("book-button")
   const bookedDateElement = document.getElementById("booked-date")
   const bookedTimeElement = document.getElementById("booked-time")
-  const backToHomeBtn = document.getElementById("back-to-home")
 
   // Состояние приложения
   let currentQuestionIndex = 0
@@ -338,12 +337,6 @@ document.addEventListener("DOMContentLoaded", () => {
     welcomePage.classList.add("hidden")
     surveyPage.classList.remove("hidden")
     showQuestion(0)
-  })
-
-  backToHomeBtn.addEventListener("click", () => {
-    successPage.classList.add("hidden")
-    welcomePage.classList.remove("hidden")
-    resetState()
   })
 
   bookButton.addEventListener("click", bookSlot)
